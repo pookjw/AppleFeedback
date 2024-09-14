@@ -7,7 +7,7 @@ In the documentation for `-[NSObject<NSKeyValueSharedObserverRegistration> setSh
 /// to this method will replace existing shared observations.
 ```
 
-However, when I make subsequent calls to -setSharedObservers: as shown below, an exception is thrown:
+However, when I make subsequent calls to `-setSharedObservers:` as shown below, an exception is thrown:
 
 ```objc
 int main(int argc, const char * argv[]) {
@@ -49,8 +49,8 @@ Foundation`-[NSKeyValueSharedObserversSnapshot _assignToObject:]:
     0x19f8ffe54 <+100>: b      0x19fa823ec               ; symbol stub for: object_setClass
 ```
 
-In the first call, the result is 0x1, but in the second call, it results in 0x0. This is because, during the second call, `object_getClass($x2)` returns `NSKVONotifying_FooObject` instead of `FooObject`. At `<+100>`, `object_setClass` replaces the isa of `$x2`, which causes the exception during the second call.
+In the first call, the result is 0x1, but in the second call, it results in `0x0`. This is because, during the second call, `object_getClass($x2)` returns `NSKVONotifying_FooObject` instead of `FooObject`. At `<+100>`, `object_setClass` replaces the isa of `$x2`, which causes the exception during the second call.
 
-(`NSKVONotifying_FooObject` is allocated (`objc_allocateClassPair`) and registered (`objc_registerClassPair`) when `-addSharedObserver:forKey:options:` is called. Internally, it invokes `_NSKVONotifyingCreateInfoWithOriginalClass`, which handles the allocation and registration.)
+(`NSKVONotifying_FooObject` is allocated (`objc_allocateClassPair`) and registered (`objc_registerClassPair`) when `-addSharedObserver:forKey:options:context:` is called. Internally, it invokes `_NSKVONotifyingCreateInfoWithOriginalClass`, which handles the allocation and registration.)
 
 This behavior differs from the documentation, and I believe it is a bug.
