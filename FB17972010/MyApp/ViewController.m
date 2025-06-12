@@ -51,12 +51,12 @@
                 slider.trackConfiguration = nil;
                 
                 // Uncomment to fix
-//                ((void (*)(id ,SEL, float))objc_msgSend)(slider, sel_registerName("_setMinimumEnabledValue:"), slider.minimumValue);
-//                ((void (*)(id ,SEL, float))objc_msgSend)(slider, sel_registerName("_setMaximumEnabledValue:"), slider.maximumValue);
-//                slider.value = value;
-//                __kindof UIView *_visualElement;
-//                assert(object_getInstanceVariable(slider, "_visualElement", (void **)&_visualElement) != NULL);
-//                _visualElement.frame = _visualElement.frame;
+                ((void (*)(id ,SEL, float))objc_msgSend)(slider, sel_registerName("_setMinimumEnabledValue:"), slider.minimumValue);
+                ((void (*)(id ,SEL, float))objc_msgSend)(slider, sel_registerName("_setMaximumEnabledValue:"), slider.maximumValue);
+                slider.value = value;
+                __kindof UIView *_visualElement;
+                assert(object_getInstanceVariable(slider, "_visualElement", (void **)&_visualElement) != NULL);
+                _visualElement.frame = _visualElement.frame;
             }];
             
             action.attributes = UIMenuElementAttributesDestructive;
